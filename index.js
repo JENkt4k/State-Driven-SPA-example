@@ -1,11 +1,20 @@
 import { Header, Nav, Main, Footer } from "./components";
 import * as state from "./store";
+import {StateSubject} from "./StateSubject"
+import {StateObserver} from "./StateObserver"
+
+const appState = new StateSubject(state.Home);
+const pages = [];
+pages.push(new StateObserver(appState,state.Bio));
+pages.push(new StateObserver(appState,state.Form));
+pages.push(new StateObserver(appState,state.Gallery));
+pages.push(new StateObserver(appState,state.Home));
 
 function render(st = state.Home) {
   document.querySelector("#root").innerHTML = `
   ${Header(st)}
   ${Nav(state.Links)}
-  ${Main(st)}
+  ${pages.map(page => page.render()).join('')}
   ${Footer()}
 `;
   addNavEventListeners();
@@ -19,6 +28,7 @@ function addNavEventListeners() {
   document.querySelectorAll("nav a").forEach(navLink =>
     navLink.addEventListener("click", event => {
       event.preventDefault();
+      appState.setState(state[event.target.title]);
       render(state[event.target.title]);
     })
   );
