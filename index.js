@@ -1,4 +1,4 @@
-import { Header, Nav, Main, Footer } from "./components";
+//import { Header, Nav, Main, Footer } from "./components";
 import * as state from "./store";
 import {StateSubject} from "./StateSubject"
 import {StateObserver} from "./StateObserver"
@@ -10,7 +10,9 @@ pages.push(new StateObserver(appState,state.Form));
 pages.push(new StateObserver(appState,state.Gallery));
 pages.push(new StateObserver(appState,state.Home));
 
-function render(st = state.Home) {
+appState.setState(state.Home);
+
+/*function render(st = state.Home) {
   document.querySelector("#root").innerHTML = `
   ${Header(st)}
   ${Nav(state.Links)}
@@ -21,9 +23,9 @@ function render(st = state.Home) {
   addPicOnFormSubmit(st);
 }
 
-render();
+render();*/
 
-function addNavEventListeners() {
+/*function addNavEventListeners() {
   // add event listeners to Nav items for navigation
   document.querySelectorAll("nav a").forEach(navLink =>
     navLink.addEventListener("click", event => {
@@ -58,4 +60,4 @@ function addPicOnFormSubmit(st) {
       render(state.Gallery);
     });
   }
-}
+} */
